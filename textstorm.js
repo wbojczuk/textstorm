@@ -1,6 +1,3 @@
-
-
-
 const textStorm = {
     userSelect: false,
     initialState: false,
