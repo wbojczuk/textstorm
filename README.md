@@ -1,4 +1,10 @@
-# textstorm
+<h1>About TextStorm</h1>
+TextStorm is an installment in the AnimationStorm framework line. This version targets text specifically and allows you to use multiple transitions to write text into the screen. Animations are made with js/css, with the Javascript pinpointing each individual letter and css animationg the letter appropriatly via @keyframes.<br><br>
+
+DEMO- https://wbojczuk.github.io/animationstorm/
+
+DEVLOG/BLOG- https://williambojczuk.blogspot.com/search/label/animationstorm
+
 <h2>Settings that all text animation have</h2><br>
 data-initialstate="true/false" (Whether or not to return element to initial state... Some stylish fonts may not revert extremely well)<br>
 data-userselect="true/false" (Whether or not to allow user-select and pointer-events on the text during and after animation.)<br>
