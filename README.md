@@ -1,5 +1,5 @@
 # textstorm
-<h2>Settings that all text aniamtion have</h2><br>
+<h2>Settings that all text animation have</h2><br>
 data-initialstate="true/false" (Whether or not to return element to initial state... Some stylish fonts may not revert extremely well)<br>
 data-userselect="true/false" (Whether or not to allow user-select and pointer-events on the text during and after animation.)<br>
 
