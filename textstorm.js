@@ -1,6 +1,6 @@
 /*
  Program: textstorm.js
- Version: 1.0 
+ Version: 1.1 
  Creator: William Bojczuk (wiliambojczuk@gmail.com)
  License: BSD
  Github: https://github.com/wbojczuk
@@ -17,7 +17,7 @@ const textStorm = {
     //  DEFAULT  ALSO IN MS
      simpleWriteDelay: 2000,
     //  DEFAULT TIME TO IDLE PLACEHOLDER AFTER ANIMATION. Leave null for infinite idling;
-     simpleWriteIdle: 2000,
+     simpleWriteIdle: 500,
      simpleWritePlaceholder: true,
 
      // Multi WRITE SPEED (MS)
@@ -255,6 +255,16 @@ const textStorm = {
  }
  `;
  document.getElementsByTagName("head")[0].append(styleElem);
+ const isElementXPercentInViewport = function(el, percentVisible) {
+    let
+      rect = el.getBoundingClientRect(),
+      windowHeight = (window.innerHeight || document.documentElement.clientHeight);
+  
+    return !(
+      Math.floor(100 - (((rect.top >= 0 ? 0 : rect.top) / +-rect.height) * 100)) < percentVisible ||
+      Math.floor(100 - ((rect.bottom - windowHeight) / rect.height) * 100) < percentVisible
+    )
+  };
 
         /* TEXT WAVE ANIM STYLESHEET*/
         const waveStyles = document.createElement("style");
@@ -565,11 +575,29 @@ const textStorm = {
             
             textCount++;
             if(textCount<tempText.length){
-                setTimeout(writeLoadLoop, Math.random() * (speedSettings - (speedSettings - 10)) + (speedSettings - 10));
+                if(isElementXPercentInViewport(currentElem,1)){
+                    setTimeout(writeLoadLoop, Math.random() * (speedSettings - (speedSettings - 10)) + (speedSettings - 10));
+                   }else{
+                    let checkInterval = setInterval(()=>{
+                        if(isElementXPercentInViewport(currentElem, 1)){
+                            setTimeout(writeLoadLoop, Math.random() * (speedSettings - (speedSettings - 10)) + (speedSettings - 10));
+                            clearInterval(checkInterval);
+                           } 
+                    },200)
+                   }
             } else { 
                 if(currentCount+1<textArray.length||(loopSettings!==false&&loopSettings!=="false")){
-                   
+                   if(isElementXPercentInViewport(currentElem,1)){
                     setTimeout(delLoadLoop, currentIdle);
+                   }else{
+                    let checkInterval = setInterval(()=>{
+                        if(isElementXPercentInViewport(currentElem, 1)){
+                            setTimeout(delLoadLoop, currentIdle);
+                            clearInterval(checkInterval);
+                           } 
+                    },200)
+                   }
+                    
             } else if(currentAfterIdle){
                 setTimeout(()=>{
                     currentPlaceholder.addEventListener("animationiteration", ()=>{currentPlaceholder.remove();})
@@ -592,12 +620,31 @@ const textStorm = {
                         currentCount++;
                         tempText = textArray[currentCount].textContent;
                         textCount = 0;
-                        setTimeout(writeLoadLoop, currentIdle);
+                        if(isElementXPercentInViewport(currentElem,1)){
+                            setTimeout(writeLoadLoop, currentIdle);
+                           }else{
+                            let checkInterval = setInterval(()=>{
+                                if(isElementXPercentInViewport(currentElem, 1)){
+                                    setTimeout(writeLoadLoop, currentIdle);
+                                    clearInterval(checkInterval);
+                                   } 
+                            },200)
+                           }
+                        
                     }else{
                         currentCount = 0;
                         tempText = textArray[currentCount].textContent;
                         textCount = 0;
-                        setTimeout(writeLoadLoop, currentIdle);
+                        if(isElementXPercentInViewport(currentElem,1)){
+                            setTimeout(writeLoadLoop, currentIdle);
+                           }else{
+                            let checkInterval = setInterval(()=>{
+                                if(isElementXPercentInViewport(currentElem, 1)){
+                                    setTimeout(writeLoadLoop, currentIdle);
+                                    clearInterval(checkInterval);
+                                   } 
+                            },200)
+                           }
                     }
                 }
             };
